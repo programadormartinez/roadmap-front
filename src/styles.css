@@ -1,3 +1,85 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import "tailwindcss";
+
+@theme {
+    --color-bg-dark: #0a0b10;
+    --color-bg-card: rgba(20, 21, 28, 0.7);
+    --color-accent-primary: #00f2ff;
+    --color-accent-secondary: #7000ff;
+    --color-text-main: #e0e0e0;
+    --color-text-dim: #94a3b8;
+}
+
+:root {
+    --bg-dark: #0a0b10;
+    --bg-card: rgba(20, 21, 28, 0.7);
+    --accent-primary: #00f2ff;
+    --accent-secondary: #7000ff;
+    --text-main: #e0e0e0;
+    --text-dim: #94a3b8;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glow-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Outfit', 'Inter', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(112, 0, 255, 0.1) 0, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(0, 242, 255, 0.1) 0, transparent 50%);
+    min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-secondary);
+    border-radius: 10px;
+}
+
+.glass-morphism {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+}
+
+.neon-border {
+    border: 1px solid var(--accent-primary);
+    box-shadow: var(--glow-shadow);
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.float-animation {
+    animation: float 6s ease-in-out infinite;
+}
