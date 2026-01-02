@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "serve -s dist/roadmpapsh/browser -l $PORT",
-    "dev": "ng serve",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -30,9 +29,7 @@
     "@angular/forms": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
     "@angular/router": "^21.0.0",
-    "http-server": "^14.1.1",
     "rxjs": "~7.8.0",
-    "serve": "^14.2.5",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
