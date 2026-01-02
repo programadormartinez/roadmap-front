@@ -1,0 +1,70 @@
+<div class="landing-container">
+    <div id="vanta-bg"></div>
+
+    <nav class="nav-bar">
+        <button class="nav-link" (click)="navigateToLogin()">YA ESTOY REGISTRADO</button>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="badge float-animation">Lanzamiento 2026</span>
+                <h1 class="hero-title">
+                    DISEÑA TU <span class="gradient-text">FUTURO</span><br>
+                    EN EL 2026
+                </h1>
+                <p class="hero-subtitle">
+                    La plataforma definitiva para programadores que no se conforman.
+                    Trazamos tu hoja de ruta, tú conquistas el mundo tecnológico.
+                </p>
+                <div class="cta-group">
+                    <button class="btn-primary" (click)="navigateToRegister()">EMPEZAR AHORA</button>
+                    <button class="btn-secondary" (click)="scrollToFeatures()">SABER MÁS</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <h2 class="section-title">Tu Arsenal de <span class="gradient-text">Evolución</span></h2>
+
+            <div class="features-grid">
+                <div class="feature-card glass-morphism">
+                    <span class="feature-icon">🚀</span>
+                    <h3>Roadmaps de Élite</h3>
+                    <p>Rutas personalizadas para dominar Angular, Spring Boot, AWS y más. No pierdas tiempo en lo que no
+                        importa.</p>
+                </div>
+
+                <div class="feature-card glass-morphism">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Rastreo en Tiempo Real</h3>
+                    <p>Visualiza tu crecimiento con nuestro sistema de checklist avanzado. Cada check es una neurona más
+                        en tu arsenal.</p>
+                </div>
+
+                <div class="feature-card glass-morphism">
+                    <span class="feature-icon">💎</span>
+                    <h3>Mentalidad 1%</h3>
+                    <p>Inspirado en Atomic Habits. Pequeños cambios, resultados masivos. Construye la identidad del
+                        arquitecto de software que deseas ser.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enthusiasm Banner -->
+        <section class="enthusiasm-banner glass-morphism">
+            <h2 class="enthusiasm-title">¿ESTÁS LISTO PARA EL <span class="gradient-text">SIGUIENTE NIVEL?</span></h2>
+            <p class="hero-subtitle">
+                2026 no es solo otro año. Es EL AÑO donde tu código cambiará realidades.
+                Únete a la legión de desarrolladores que están construyendo el mañana.
+            </p>
+            <button class="btn-primary" (click)="navigateToRegister()">RECLAMAR MI LUGAR</button>
+        </section>
+
+        <footer style="padding: 4rem; text-align: center; color: var(--text-dim);">
+            <p>&copy; 2026 MyRoadmap. Todos los derechos reservados.</p>
+        </footer>
+    </main>
+</div>

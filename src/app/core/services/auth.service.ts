@@ -30,7 +30,7 @@ export class AuthService {
   // Signals to manage state
   currentUser = signal<AuthResponse | null>(this.getUserFromStorage());
 
-  constructor() {}
+  constructor() { }
 
   private getUserFromStorage(): AuthResponse | null {
     const user = localStorage.getItem('user');
@@ -54,7 +54,7 @@ export class AuthService {
     // If we don't have a token, we can't refresh.
     const token = this.getToken();
     if (!token) {
-        return throwError(() => new Error('No token available'));
+      return throwError(() => new Error('No token available'));
     }
 
     // The user said "refresh que tiene que ir la authorization a traves el RequestHeader"
@@ -94,6 +94,15 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const expirationDate = payload.exp * 1000; // exp is in seconds
+      return Date.now() < expirationDate;
+    } catch (e) {
+      return false;
+    }
   }
 }
