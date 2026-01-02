@@ -145,7 +145,25 @@
         </div>
         } @else {
         <div class="flex-1 flex items-center justify-center">
-            <p class="text-text-dim text-xl">Selecciona una categoría para comenzar tu viaje</p>
+            @if (categories().length === 0) {
+            <div class="glass-morphism p-10 md:p-16 flex flex-col items-center gap-8 text-center max-w-xl animate-in">
+                <div
+                    class="w-24 h-24 rounded-full bg-accent-primary/10 flex items-center justify-center text-5xl float-animation">
+                    🚀
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold mb-4">¡Empieza tu Viaje 2026!</h2>
+                    <p class="text-text-dim text-lg">Parece que aún no tienes rutas trazadas. Define tu primera
+                        categoría para empezar a conquistar tus metas tecnológicas.</p>
+                </div>
+                <button (click)="openAddCategory()"
+                    class="px-10 py-5 bg-gradient-to-r from-accent-primary to-accent-secondary text-bg-dark rounded-2xl font-black text-xl hover:scale-110 transition-all shadow-[0_0_40px_rgba(0,242,255,0.4)] cursor-pointer">
+                    + AGREGAR NUEVA CATEGORÍA
+                </button>
+            </div>
+            } @else {
+            <p class="text-text-dim text-xl">Selecciona una categoría lateral para visualizar tu progreso</p>
+            }
         </div>
         }
     </main>
@@ -162,4 +180,35 @@
     <app-delete-confirm-modal *ngIf="isDeleteModalOpen()" [categoryName]="categoryForm().name || ''"
         (close)="isDeleteModalOpen.set(false)" (confirm)="confirmDelete()">
     </app-delete-confirm-modal>
+
+    <!-- Roadmap Footer & Quotes -->
+    <footer class="w-full mt-12 pb-8 flex flex-col items-center gap-10 border-t border-white/5 pt-12">
+        <!-- Motivational Quote -->
+        <div class="text-center max-w-2xl px-4">
+            <p class="text-accent-primary font-medium italic text-lg mb-3 h-14 flex items-center justify-center">
+                "{{ currentQuote() }}"
+            </p>
+            <div class="h-1 w-12 bg-accent-secondary mx-auto rounded-full blur-[1px]"></div>
+        </div>
+
+        <!-- Personal Info Footer -->
+        <div class="flex flex-col items-center gap-4">
+            <div class="flex gap-8 text-text-dim">
+                <a href="https://www.linkedin.com/in/martinezaldodev/" target="_blank"
+                    class="hover:text-accent-primary transition-all hover:scale-110 text-xs flex items-center gap-2">
+                    LinkedIn
+                </a>
+                <a href="https://github.com/programadormartinez" target="_blank"
+                    class="hover:text-accent-primary transition-all hover:scale-110 text-xs flex items-center gap-2">
+                    GitHub
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-[10px] text-text-dim uppercase tracking-[0.2em]">
+                    Desarrollado por <span class="text-accent-secondary font-bold">Aldo Martinez</span>
+                </p>
+                <p class="text-[12px] text-accent-primary mt-1 font-medium">Con Cariño Aldo © 2026</p>
+            </div>
+        </div>
+    </footer>
 </div>

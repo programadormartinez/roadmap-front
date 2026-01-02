@@ -39,7 +39,27 @@ export class RoadmapComponent implements OnInit {
   categoryForm = signal<Partial<RoadmapCategory>>({});
   isEditCategory = signal(false);
 
+  // Quotes logic
+  quotes = [
+    "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
+    "El futuro pertenece a quienes creen en la belleza de sus sueños.",
+    "La mejor forma de predecir el futuro es creándolo.",
+    "Tu código es el pincel con el que pintas el mañana.",
+    "No te detengas hasta que estés orgulloso.",
+    "Dominar una tecnología es el primer paso para cambiar el mundo.",
+    "2026 es el año de tu evolución definitiva."
+  ];
+  currentQuote = signal(this.quotes[0]);
+
   constructor() {
+    effect(() => {
+      const interval = setInterval(() => {
+        const randomIndex = Math.floor(Math.random() * this.quotes.length);
+        this.currentQuote.set(this.quotes[randomIndex]);
+      }, 10000); // Cambia cada 10 segundos
+
+      return () => clearInterval(interval);
+    });
     effect(() => {
       const currentData = this.categories();
       if (currentData.length > 0 && !this.selectedCategory()) {
