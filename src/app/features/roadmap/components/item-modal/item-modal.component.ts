@@ -23,47 +23,12 @@ import { RoadmapItemDTO } from '../../../../core/models/roadmap.model';
         </div>
 
         <div class="flex flex-col gap-6">
-          <!-- Recursos/Enlaces Section -->
-          <div class="flex flex-col gap-2">
-            <label class="text-xs text-text-dim uppercase flex justify-between items-center">
-              Recursos / Enlaces
-              <button
-                type="button"
-                (click)="addLink()"
-                class="text-accent-primary hover:text-accent-primary/80 text-xs px-2 py-1 border border-accent-primary/30 rounded cursor-pointer"
-              >
-                + Agregar enlace
-              </button>
-            </label>
-            <div class="flex flex-col gap-2">
-              @if(item.links && item.links.length > 0) {
-                @for(link of item.links; track $index) {
-                  <div class="flex gap-2 items-center bg-white/5 border border-white/10 rounded-lg p-2">
-                    <input
-                      [(ngModel)]="item.links[$index]"
-                      placeholder="https://..."
-                      class="flex-1 bg-transparent text-sm focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      (click)="removeLink($index)"
-                      class="text-red-400 hover:text-red-300 text-sm cursor-pointer px-2"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                }
-              } @else {
-                <p class="text-xs text-text-dim italic">No hay recursos agregados aún</p>
-              }
-            </div>
-          </div>
           <div class="flex flex-col gap-2">
             <label class="text-xs text-text-dim uppercase">Título</label>
             <input
               [(ngModel)]="item.title"
               placeholder="Ej: Arquitectura Hexagonal"
-              class="bg-white/5 border border-white/10 rounded-lg p-3 text-sm focus:outline-none focus:border-accent-primary "
+              class="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-accent-primary"
             />
           </div>
 
@@ -72,16 +37,57 @@ import { RoadmapItemDTO } from '../../../../core/models/roadmap.model';
             <textarea
               [(ngModel)]="item.description"
               placeholder="Breve descripción del tema..."
-              class="bg-white/5 border border-white/10 rounded-lg p-3 text-sm focus:outline-none focus:border-accent-primary h-20 resize-none"
+              class="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-accent-primary h-20 resize-none"
             ></textarea>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
+          <!-- Recursos/Enlaces Section -->
+          <div class="flex flex-col gap-3">
+            <div class="flex justify-between items-center">
+              <label class="text-xs text-text-dim uppercase">Recursos / Enlaces</label>
+              <button
+                type="button"
+                (click)="addLink()"
+                class="btn-add-link"
+              >
+                <span>+ Agregar enlace</span>
+              </button>
+            </div>
+            
+            <div class="flex flex-col gap-2">
+              @if(item.links && item.links.length > 0) {
+                @for(link of item.links; track $index) {
+                  <div class="flex gap-2 items-center bg-white/5 border border-white/10 rounded-xl p-2 group">
+                    <span class="text-accent-primary ml-2">🔗</span>
+                    <input
+                      [(ngModel)]="item.links[$index]"
+                      placeholder="https://..."
+                      class="flex-1 bg-transparent text-sm focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      (click)="removeLink($index)"
+                      class="text-text-dim hover:text-red-400 text-sm cursor-pointer px-3 transition-colors"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                }
+              } @else {
+                <div class="p-4 border border-dashed border-white/10 rounded-xl text-center">
+                  <p class="text-xs text-text-dim italic">No hay recursos agregados aún</p>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Dynamic fields based on Edit Mode -->
+          <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-2">
               <label class="text-xs text-text-dim uppercase">Estado</label>
               <select
                 [(ngModel)]="item.status"
-                class="bg-white/5 border border-white/10 rounded-lg p-3 text-sm focus:outline-none focus:border-accent-primary"
+                class="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-accent-primary cursor-pointer appearance-none"
               >
                 <option value="PENDING">Pendiente</option>
                 <option value="IN_PROGRESS">En Progreso</option>
@@ -89,83 +95,65 @@ import { RoadmapItemDTO } from '../../../../core/models/roadmap.model';
               </select>
             </div>
 
-            <div class="flex flex-col gap-2">
-              <label class="text-xs text-text-dim uppercase flex justify-between">
-                Progreso <span>{{ item.progress }}%</span>
-              </label>
-              <input
-                type="range"
-                [(ngModel)]="item.progress"
-                class="w-full accent-accent-primary"
-              />
-            </div>
-          </div>
-
-          
-
-          @if(isEdit){
-          <div class="space-y-4">
-            <!-- Enlaces relacionados en modo lectura (clickeables) -->
-            @if(item.links && item.links.length > 0) {
-              <div class="flex flex-col gap-2 mb-4">
-                <label class="text-xs text-text-dim uppercase">Enlaces Relacionados</label>
-                <div class="flex flex-col gap-2">
-                  @for(link of item.links; track $index) {
-                    <a
-                      [href]="link"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="flex items-center gap-2 bg-white/5 border border-accent-primary/30 rounded-lg p-3 hover:bg-white/10 transition-all group cursor-pointer"
-                    >
-                      <span class="text-accent-primary text-sm">🔗</span>
-                      <span class="text-sm flex-1 truncate group-hover:text-accent-primary transition-colors">{{ link }}</span>
-                      <span class="text-xs text-text-dim group-hover:text-accent-primary">↗</span>
-                    </a>
-                  }
+            @if(isEdit) {
+              <div class="flex flex-col gap-2">
+                <label class="text-xs text-text-dim uppercase flex justify-between">
+                  Progreso <span>{{ item.progress }}%</span>
+                </label>
+                <div class="range-container">
+                  <input
+                    type="range"
+                    [(ngModel)]="item.progress"
+                    class="w-full"
+                  />
                 </div>
               </div>
             }
-            
+          </div>
+
+          @if(isEdit){
+          <div class="space-y-4 pt-4 border-t border-white/10">
             <div class="flex flex-col gap-2">
               <label class="text-xs text-text-dim uppercase">Lo que aprendí</label>
               <textarea
                 [(ngModel)]="item.learned"
-                placeholder="Conceptos clave..."
-                class="bg-white/5 border border-white/10 rounded-lg p-3 text-sm focus:outline-none focus:border-accent-secondary h-24 resize-none"
+                placeholder="Conceptos clave que dominaste..."
+                class="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-accent-secondary h-24 resize-none"
               ></textarea>
             </div>
 
             <div class="flex flex-col gap-2">
-              <label class="text-xs text-text-dim uppercase">Aplicación</label>
+              <label class="text-xs text-text-dim uppercase">Aplicación Práctica</label>
               <textarea
                 [(ngModel)]="item.application"
-                placeholder="Cómo usé esto..."
-                class="bg-white/5 border border-white/10 rounded-lg p-3 text-sm focus:outline-none focus:border-accent-secondary h-24 resize-none"
+                placeholder="¿Cómo aplicaste este conocimiento?"
+                class="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-accent-secondary h-24 resize-none"
               ></textarea>
             </div>
 
             <div class="flex flex-col gap-2">
-              <label class="text-xs text-text-dim uppercase">Adiciones</label>
+              <label class="text-xs text-text-dim uppercase">Próximos Pasos / Notas</label>
               <textarea
                 [(ngModel)]="item.additions"
-                placeholder="Qué más explorar..."
-                class="bg-white/5 border border-white/10 rounded-lg p-3 text-sm focus:outline-none focus:border-accent-secondary h-24 resize-none"
+                placeholder="¿Qué más te gustaría explorar sobre este tema?"
+                class="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-accent-secondary h-24 resize-none"
               ></textarea>
             </div>
           </div>
           }
-          <div class="flex justify-end gap-4 mt-4">
+
+          <div class="flex justify-end gap-4 mt-6">
             <button
               (click)="close.emit()"
-              class="px-6 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-all text-sm font-semibold cursor-pointer"
+              class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition-all text-sm font-semibold cursor-pointer"
             >
               Cancelar
             </button>
             <button
               (click)="save.emit(item)"
-              class="px-6 py-2 rounded-lg bg-accent-primary text-bg-dark hover:bg-accent-primary/80 transition-all text-sm font-bold cursor-pointer"
+              class="px-8 py-3 rounded-xl bg-gradient-to-r from-accent-primary to-accent-secondary text-bg-dark hover:scale-[1.02] transition-all text-sm font-bold cursor-pointer"
             >
-              {{ isEdit ? 'Guardar cambios' : 'Crear Tema' }}
+              {{ isEdit ? 'Guardar Cambios' : 'Crear Tema' }}
             </button>
           </div>
         </div>
@@ -190,30 +178,57 @@ import { RoadmapItemDTO } from '../../../../core/models/roadmap.model';
         max-width: 650px;
         max-height: 90vh;
         overflow-y: auto;
-        background: #0a0a0a;
+        background: #0d0e12;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 24px;
-        padding: 2rem;
+        border-radius: 32px;
+        padding: 2.5rem;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       }
 
+      .btn-add-link {
+        background: rgba(0, 242, 255, 0.1);
+        border: 1px solid var(--accent-primary);
+        color: var(--accent-primary);
+        padding: 0.4rem 1rem;
+        border-radius: 99px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-add-link:hover {
+        background: var(--accent-primary);
+        color: var(--bg-dark);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+      }
+
+      .range-container {
+        padding: 1rem 0;
+      }
+
       .animate-in {
-        animation: slideIn 0.3s ease-out forwards;
+        animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
 
       @keyframes slideIn {
         from {
           opacity: 0;
-          transform: translateY(20px);
+          transform: translateY(30px) scale(0.95);
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
         }
       }
 
       input[type='range'] {
-        height: 4px;
+        -webkit-appearance: none;
+        width: 100%;
+        height: 6px;
         border-radius: 5px;
         background: rgba(255, 255, 255, 0.1);
         outline: none;
@@ -222,12 +237,19 @@ import { RoadmapItemDTO } from '../../../../core/models/roadmap.model';
       input[type='range']::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 15px;
-        height: 15px;
+        width: 20px;
+        height: 20px;
         background: var(--accent-primary);
+        border: 3px solid #0d0e12;
         border-radius: 50%;
         cursor: pointer;
-        box-shadow: 0 0 10px var(--accent-primary);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
+        transition: all 0.2s ease;
+      }
+
+      input[type='range']::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 20px var(--accent-primary);
       }
     `,
   ],
