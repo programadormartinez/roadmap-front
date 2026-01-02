@@ -1,172 +1,181 @@
-<div class="min-h-screen flex flex-col md:flex-row p-4 md:p-8 gap-8">
-    <!-- Sidebar Categorías -->
-    <aside class="w-full md:w-64 flex flex-col gap-6">
-        <div class="glass-morphism p-6 flex flex-col gap-4">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold gradient-text">Roadmap 2026</h1>
-                <button (click)="openAddCategory()"
-                    class="text-accent-primary hover:scale-110 transition-transform cursor-pointer"
-                    title="Agregar Categoría">
-                    <span class="text-xl">+</span>
-                </button>
-            </div>
-            <p class="text-xs text-text-dim uppercase tracking-widest">Seleccionar Ruta</p>
-
-            <nav class="flex flex-col gap-3">
-                @for (cat of categories(); track cat.id) {
-                <div class="relative group/cat">
-                    <button (click)="selectCategory(cat)" [class.neon-border]="selectedCategory()?.id === cat.id"
-                        class="w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300 hover:bg-white/5 text-left group cursor-pointer">
-                        <div [style.background-color]="cat.color"
-                            class="w-3 h-3 rounded-full blur-[2px] group-hover:blur-0 transition-all"></div>
-                        <span [class.text-accent-primary]="selectedCategory()?.id === cat.id" class="flex-1 truncate">{{
-                            cat.name }}</span>
-
-                        <!-- Acciones de Categoría -->
-                        <div class="hidden group-hover:flex gap-2 items-center">
-                            <button (click)="openEditCategory($event, cat)"
-                                class="text-text-dim hover:text-accent-secondary transition-colors cursor-pointer">
-                                ✎
-                            </button>
-                            <button (click)="openDeleteCategory($event, cat)"
-                                class="text-text-dim hover:text-accent-secondary transition-colors cursor-pointer">
-                                🗑
-                            </button>
-                        </div>
+<div class="flex flex-col min-h-screen">
+    <!-- Main Content Layout -->
+    <div class="flex-1 flex flex-col md:flex-row p-4 md:p-8 gap-8">
+        <!-- Sidebar Categorías -->
+        <aside class="w-full md:w-64 flex flex-col gap-6">
+            <div class="glass-morphism p-6 flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold gradient-text">Roadmap 2026</h1>
+                    <button (click)="openAddCategory()"
+                        class="text-accent-primary hover:scale-110 transition-transform cursor-pointer"
+                        title="Agregar Categoría">
+                        <span class="text-xl">+</span>
                     </button>
                 </div>
-                }
-            </nav>
-        </div>
+                <p class="text-xs text-text-dim uppercase tracking-widest">Seleccionar Ruta</p>
 
-        <!-- Widget de Progreso General -->
-        @if (selectedCategory()) {
-        <div class="glass-morphism p-6">
-            <p class="text-xs text-text-dim uppercase tracking-widest mb-2">Progreso</p>
-            <div class="relative h-2 w-full bg-white/10 rounded-full overflow-hidden">
-                <div class="absolute top-0 left-0 h-full bg-accent-secondary shadow-[0_0_10px_rgba(112,0,255,0.5)] transition-all duration-1000"
-                    [style.width.%]="getOverallProgress()"></div>
-            </div>
-            <div class="flex justify-between mt-2 font-mono text-sm">
-                <span>{{ getOverallProgress() }}%</span>
-                <span class="text-text-dim">Meta: 100%</span>
-            </div>
-        </div>
-        }
-    </aside>
+                <nav class="flex flex-col gap-3">
+                    @for (cat of categories(); track cat.id) {
+                    <div class="relative group/cat">
+                        <button (click)="selectCategory(cat)" [class.neon-border]="selectedCategory()?.id === cat.id"
+                            class="w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300 hover:bg-white/5 text-left group cursor-pointer">
+                            <div [style.background-color]="cat.color"
+                                class="w-3 h-3 rounded-full blur-[2px] group-hover:blur-0 transition-all"></div>
+                            <span [class.text-accent-primary]="selectedCategory()?.id === cat.id"
+                                class="flex-1 truncate">{{
+                                cat.name }}</span>
 
-    <!-- Contenido Principal del Roadmap -->
-    <main class="flex-1 flex flex-col gap-6">
-        @if (selectedCategory(); as cat) {
-        <header class="flex justify-between items-center bg-white/5 p-6 rounded-2xl glass-morphism">
-            <div>
-                <h2 class="text-3xl font-bold">Temas de {{ cat.name }}</h2>
-                <p class="text-text-dim mt-1">Dominando el futuro de {{ cat.name }}</p>
+                            <!-- Acciones de Categoría -->
+                            <div class="hidden group-hover:flex gap-2 items-center">
+                                <button (click)="openEditCategory($event, cat)"
+                                    class="text-text-dim hover:text-accent-secondary transition-colors cursor-pointer">
+                                    ✎
+                                </button>
+                                <button (click)="openDeleteCategory($event, cat)"
+                                    class="text-text-dim hover:text-accent-secondary transition-colors cursor-pointer">
+                                    🗑
+                                </button>
+                            </div>
+                        </button>
+                    </div>
+                    }
+                </nav>
             </div>
-            <div class="flex items-center gap-4">
-                <button (click)="openAddItem()"
-                    class="px-4 py-2 bg-accent-secondary/20 border border-accent-secondary text-accent-secondary rounded-lg hover:bg-accent-secondary hover:text-white transition-all text-sm font-bold cursor-pointer">
-                    + Agregar Tema
-                </button>
-                <div class="hidden md:flex flex-col items-end">
-                    <span class="text-xs text-text-dim uppercase">Total</span>
-                    <span class="text-2xl font-mono text-accent-primary">{{ cat.items.length }}</span>
+
+            <!-- Widget de Progreso General -->
+            @if (selectedCategory()) {
+            <div class="glass-morphism p-6">
+                <p class="text-xs text-text-dim uppercase tracking-widest mb-2">Progreso</p>
+                <div class="relative h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div class="absolute top-0 left-0 h-full bg-accent-secondary shadow-[0_0_10px_rgba(112,0,255,0.5)] transition-all duration-1000"
+                        [style.width.%]="getOverallProgress()"></div>
+                </div>
+                <div class="flex justify-between mt-2 font-mono text-sm">
+                    <span>{{ getOverallProgress() }}%</span>
+                    <span class="text-text-dim">Meta: 100%</span>
                 </div>
             </div>
-        </header>
+            }
+        </aside>
 
-        <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-            @for (item of cat.items; track item.id) {
-            <div (click)="selectItem(item)"
-                class="group relative glass-morphism p-6 cursor-pointer border-l-4 transition-all hover:translate-x-1"
-                [style.border-left-color]="item.status === 'COMPLETED' ? '#00f2ff' : 'rgba(255,255,255,0.1)'">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="flex-1">
-                        <h3 class="text-xl font-semibold group-hover:text-accent-primary transition-colors">{{
-                            item.title }}
-                        </h3>
-                        <div class="flex items-center gap-2 mt-1 flex-wrap">
-                            <span class="text-xs px-2 py-1 rounded" [class.bg-yellow-500/20]="item.status === 'PENDING'"
-                                [class.text-yellow-400]="item.status === 'PENDING'"
-                                [class.bg-blue-500/20]="item.status === 'IN_PROGRESS'"
-                                [class.text-blue-400]="item.status === 'IN_PROGRESS'"
-                                [class.bg-green-500/20]="item.status === 'COMPLETED'"
-                                [class.text-green-400]="item.status === 'COMPLETED'">
-                                {{ item.status === 'PENDING' ? 'Pendiente' : item.status === 'IN_PROGRESS' ? 'En
-                                Progreso' : 'Completado' }}
+        <!-- Contenido Principal del Roadmap -->
+        <main class="flex-1 flex flex-col gap-6">
+            @if (selectedCategory(); as cat) {
+            <header class="flex justify-between items-center bg-white/5 p-6 rounded-2xl glass-morphism">
+                <div>
+                    <h2 class="text-3xl font-bold">Temas de {{ cat.name }}</h2>
+                    <p class="text-text-dim mt-1">Dominando el futuro de {{ cat.name }}</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button (click)="openAddItem()"
+                        class="px-4 py-2 bg-accent-secondary/20 border border-accent-secondary text-accent-secondary rounded-lg hover:bg-accent-secondary hover:text-white transition-all text-sm font-bold cursor-pointer">
+                        + Agregar Tema
+                    </button>
+                    <div class="hidden md:flex flex-col items-end">
+                        <span class="text-xs text-text-dim uppercase">Total</span>
+                        <span class="text-2xl font-mono text-accent-primary">{{ cat.items.length }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+                @for (item of cat.items; track item.id) {
+                <div (click)="selectItem(item)"
+                    class="group relative glass-morphism p-6 cursor-pointer border-l-4 transition-all hover:translate-x-1"
+                    [style.border-left-color]="item.status === 'COMPLETED' ? '#00f2ff' : 'rgba(255,255,255,0.1)'">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold group-hover:text-accent-primary transition-colors">{{
+                                item.title }}
+                            </h3>
+                            <div class="flex items-center gap-2 mt-1 flex-wrap">
+                                <span class="text-xs px-2 py-1 rounded"
+                                    [class.bg-yellow-500/20]="item.status === 'PENDING'"
+                                    [class.text-yellow-400]="item.status === 'PENDING'"
+                                    [class.bg-blue-500/20]="item.status === 'IN_PROGRESS'"
+                                    [class.text-blue-400]="item.status === 'IN_PROGRESS'"
+                                    [class.bg-green-500/20]="item.status === 'COMPLETED'"
+                                    [class.text-green-400]="item.status === 'COMPLETED'">
+                                    {{ item.status === 'PENDING' ? 'Pendiente' : item.status === 'IN_PROGRESS' ? 'En
+                                    Progreso' : 'Completado' }}
+                                </span>
+                                @if(item.links.length) {
+                                <span class="text-xs text-accent-primary flex items-center gap-1">
+                                    🔗 {{ item.links.length }} {{ item.links.length === 1 ? 'recurso' : 'recursos' }}
+                                </span>
+                                }
+                            </div>
+                        </div>
+                        <button (click)="toggleItemStatus(item); $event.stopPropagation()"
+                            class="w-6 h-6 rounded border-2 flex items-center justify-center transition-all cursor-pointer"
+                            [class.bg-accent-primary]="item.status === 'COMPLETED'"
+                            [class.border-accent-primary]="item.status === 'COMPLETED'"
+                            [class.border-white/20]="item.status !== 'COMPLETED'">
+                            @if (item.status === 'COMPLETED') {
+                            <span class="text-bg-dark text-xs">✓</span>
+                            }
+                        </button>
+                    </div>
+
+                    <!-- Vista previa de sub-ítems -->
+                    @if (item.subItems.length) {
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        @for (sub of item.subItems; track sub.id) {
+                        <span class="px-2 py-1 bg-white/5 rounded text-[10px] uppercase tracking-tighter"
+                            [class.text-accent-primary]="sub.status === 'COMPLETED'">
+                            {{ sub.title.substring(0, 15) }}...
+                        </span>
+                        }
+                    </div>
+                    }
+
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-sm text-text-dim">
+                            <span class="flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-accent-secondary"></span>
+                                {{ item.progress }}%
                             </span>
-                            @if(item.links.length) {
-                            <span class="text-xs text-accent-primary flex items-center gap-1">
-                                🔗 {{ item.links.length }} {{ item.links.length === 1 ? 'recurso' : 'recursos' }}
-                            </span>
+                            @if (item.notes?.learned) {
+                            <span class="text-accent-primary text-xs">Nota agregada</span>
                             }
                         </div>
+                        <button (click)="selectItem(item); $event.stopPropagation()"
+                            class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-accent-primary/10 border border-accent-primary/30 text-accent-primary rounded-full hover:bg-accent-primary hover:text-bg-dark transition-all cursor-pointer font-bold shadow-[0_0_10px_rgba(0,242,255,0.1)]">
+                            Actualizar Progreso
+                        </button>
                     </div>
-                    <button (click)="toggleItemStatus(item); $event.stopPropagation()"
-                        class="w-6 h-6 rounded border-2 flex items-center justify-center transition-all cursor-pointer"
-                        [class.bg-accent-primary]="item.status === 'COMPLETED'"
-                        [class.border-accent-primary]="item.status === 'COMPLETED'"
-                        [class.border-white/20]="item.status !== 'COMPLETED'">
-                        @if (item.status === 'COMPLETED') {
-                        <span class="text-bg-dark text-xs">✓</span>
-                        }
-                    </button>
-                </div>
-
-                <!-- Vista previa de sub-ítems -->
-                @if (item.subItems.length) {
-                <div class="flex flex-wrap gap-2 mb-4">
-                    @for (sub of item.subItems; track sub.id) {
-                    <span class="px-2 py-1 bg-white/5 rounded text-[10px] uppercase tracking-tighter"
-                        [class.text-accent-primary]="sub.status === 'COMPLETED'">
-                        {{ sub.title.substring(0, 15) }}...
-                    </span>
-                    }
                 </div>
                 }
-
-                <div class="flex items-center justify-between mt-auto">
-                    <div class="flex items-center gap-4 text-sm text-text-dim">
-                        <span class="flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-accent-secondary"></span>
-                            {{ item.progress }}%
-                        </span>
-                        @if (item.notes?.learned) {
-                        <span class="text-accent-primary text-xs">Nota agregada</span>
-                        }
-                    </div>
-                    <button (click)="selectItem(item); $event.stopPropagation()"
-                        class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-accent-primary/10 border border-accent-primary/30 text-accent-primary rounded-full hover:bg-accent-primary hover:text-bg-dark transition-all cursor-pointer font-bold shadow-[0_0_10px_rgba(0,242,255,0.1)]">
-                        Actualizar Progreso
-                    </button>
-                </div>
-            </div>
-            }
-        </div>
-        } @else {
-        <div class="flex-1 flex items-center justify-center">
-            @if (categories().length === 0) {
-            <div class="glass-morphism p-10 md:p-16 flex flex-col items-center gap-8 text-center max-w-xl animate-in">
-                <div
-                    class="w-24 h-24 rounded-full bg-accent-primary/10 flex items-center justify-center text-5xl float-animation">
-                    🚀
-                </div>
-                <div>
-                    <h2 class="text-3xl font-bold mb-4">¡Empieza tu Viaje 2026!</h2>
-                    <p class="text-text-dim text-lg">Parece que aún no tienes rutas trazadas. Define tu primera
-                        categoría para empezar a conquistar tus metas tecnológicas.</p>
-                </div>
-                <button (click)="openAddCategory()"
-                    class="px-10 py-5 bg-gradient-to-r from-accent-primary to-accent-secondary text-bg-dark rounded-2xl font-black text-xl hover:scale-110 transition-all shadow-[0_0_40px_rgba(0,242,255,0.4)] cursor-pointer">
-                    + AGREGAR NUEVA CATEGORÍA
-                </button>
             </div>
             } @else {
-            <p class="text-text-dim text-xl">Selecciona una categoría lateral para visualizar tu progreso</p>
+            <div class="flex-1 flex items-center justify-center">
+                @if (categories().length === 0) {
+                <div
+                    class="glass-morphism p-10 md:p-16 flex flex-col items-center gap-8 text-center max-w-xl animate-in">
+                    <div
+                        class="w-24 h-24 rounded-full bg-accent-primary/10 flex items-center justify-center text-5xl float-animation">
+                        🚀
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">¡Empieza tu Viaje 2026!</h2>
+                        <p class="text-text-dim text-lg">Parece que aún no tienes rutas trazadas. Define tu primera
+                            categoría para empezar a conquistar tus metas tecnológicas.</p>
+                    </div>
+                    <button (click)="openAddCategory()"
+                        class="px-10 py-5 bg-gradient-to-r from-accent-primary to-accent-secondary text-bg-dark rounded-2xl font-black text-xl hover:scale-110 transition-all shadow-[0_0_40px_rgba(0,242,255,0.4)] cursor-pointer">
+                        + AGREGAR NUEVA CATEGORÍA
+                    </button>
+                </div>
+                } @else {
+                <p class="text-text-dim text-xl">Selecciona una categoría lateral para visualizar tu progreso</p>
+                }
+            </div>
             }
-        </div>
-        }
-    </main>
+        </main>
+    </div>
+
+    <!-- Footer Component (Always at the bottom) -->
+    <app-footer></app-footer>
 
     <!-- Modales -->
     <app-item-modal *ngIf="isItemModalOpen()" [item]="itemForm()" [isEdit]="isEditItem()"
@@ -180,35 +189,4 @@
     <app-delete-confirm-modal *ngIf="isDeleteModalOpen()" [categoryName]="categoryForm().name || ''"
         (close)="isDeleteModalOpen.set(false)" (confirm)="confirmDelete()">
     </app-delete-confirm-modal>
-
-    <!-- Roadmap Footer & Quotes -->
-    <footer class="w-full mt-12 pb-8 flex flex-col items-center gap-10 border-t border-white/5 pt-12">
-        <!-- Motivational Quote -->
-        <div class="text-center max-w-2xl px-4">
-            <p class="text-accent-primary font-medium italic text-lg mb-3 h-14 flex items-center justify-center">
-                "{{ currentQuote() }}"
-            </p>
-            <div class="h-1 w-12 bg-accent-secondary mx-auto rounded-full blur-[1px]"></div>
-        </div>
-
-        <!-- Personal Info Footer -->
-        <div class="flex flex-col items-center gap-4">
-            <div class="flex gap-8 text-text-dim">
-                <a href="https://www.linkedin.com/in/martinezaldodev/" target="_blank"
-                    class="hover:text-accent-primary transition-all hover:scale-110 text-xs flex items-center gap-2">
-                    LinkedIn
-                </a>
-                <a href="https://github.com/programadormartinez" target="_blank"
-                    class="hover:text-accent-primary transition-all hover:scale-110 text-xs flex items-center gap-2">
-                    GitHub
-                </a>
-            </div>
-            <div class="text-center">
-                <p class="text-[10px] text-text-dim uppercase tracking-[0.2em]">
-                    Desarrollado por <span class="text-accent-secondary font-bold">Aldo Martinez</span>
-                </p>
-                <p class="text-[12px] text-accent-primary mt-1 font-medium">Con Cariño Aldo © 2026</p>
-            </div>
-        </div>
-    </footer>
 </div>
