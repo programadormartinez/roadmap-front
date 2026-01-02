@@ -8,7 +8,7 @@ import { tap } from 'rxjs';
 })
 export class RoadmapService {
     private http = inject(HttpClient);
-    private readonly API_URL = 'https://myroadmap2026.netlify.app/api/roadmap';
+    private readonly API_URL = 'https://roadmap-back-production.up.railway.app/api/roadmap';
 
     private roadmapData = signal<RoadmapCategory[]>([]);
 
@@ -41,7 +41,7 @@ export class RoadmapService {
 
         for (let i = 0; i < text.length; i++) {
             const char = text[i];
-            
+
             if (char === '[') {
                 if (arrayStart === -1) arrayStart = i;
                 bracketDepth++;

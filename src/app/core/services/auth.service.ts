@@ -25,7 +25,7 @@ export interface RegisterRequest {
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private readonly API_URL = 'https://myroadmap2026.netlify.app/api/auth';
+  private readonly API_URL = 'https://roadmap-back-production.up.railway.app/api/auth';
 
   // Signals to manage state
   currentUser = signal<AuthResponse | null>(this.getUserFromStorage());
@@ -50,13 +50,13 @@ export class AuthService {
   }
 
   refreshToken(): Observable<AuthResponse> {
-    // The interceptor will attach the current token. 
+    // The interceptor will attach the current token.
     // If we don't have a token, we can't refresh.
     const token = this.getToken();
     if (!token) {
         return throwError(() => new Error('No token available'));
     }
-    
+
     // The user said "refresh que tiene que ir la authorization a traves el RequestHeader"
     // Usually refresh endpoints might return a new token.
     return this.http.post<AuthResponse>(`${this.API_URL}/refresh`, {}).pipe(
@@ -82,7 +82,7 @@ export class AuthService {
   getUserId(): number | null {
     const token = this.getToken();
     if (!token) return null;
-    
+
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       // Assuming 'jti' holds the user ID based on the provided token example
